@@ -21,7 +21,7 @@ module.exports = (sequelize) => {
       type: DataTypes.TEXT,
       allowNull:false,
     },
-    launch_date:{
+    release_date:{
       type:DATEONLY
     },
     rating:{

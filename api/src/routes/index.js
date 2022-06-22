@@ -7,11 +7,12 @@ const router = Router();
 
 const videogames = require("./videogames");
 const genres = require("./genres");
-
+const videogame= require("./videogame")
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
 router.use('/videogames',videogames);
 router.use('/genres',genres);
+router.use('/videogame',videogame);
 
 module.exports = router;
