@@ -13,7 +13,7 @@ router.get('/', async (req,res)=> {
     
     try {
         if(name){
-            let gamesDb = await Videogame.findOne({where:{name:name},include:[Genre]});
+            let gamesDb = await Videogame.findOne({where:{name:name},include:Genre});
             if (gamesDb){
                 foundGame={
                     name:gamesDb.name,
@@ -66,14 +66,24 @@ router.get('/', async (req,res)=> {
             apiName=apiGames.next;
             games = games.concat(dataGame);
         } 
-        let dbGames = await Videogame.findAll({include:[Genre]})
-        if (dbGames.length>0){
-            let jsonGames = dbGames.map((j)=>j.toJSON())
-            jsonGames.forEach(c=>{
-                c.genres= c.genres.map((genre)=>genre.name).join(", ")
-            });
-            games = games.concat(jsongames);
-        }
+        let dbGames = await Videogame.findAll({include:Genre})
+        // if (dbGames.length>0){
+            const foundGames = dbGames.map(e=>{
+                let genr = e.genres.map(g=>g.name);
+                let genrResult = genr.join(", ");
+                let game = {
+                    name:e.name,
+                    image:e.image,
+                    genres:genrResult,
+                };
+                return game;
+            }) 
+            // let jsonGames = dbGames.map((j)=>j.toJSON())
+            // jsonGames.forEach(c=>{
+            //     c.genres= c.genres.map((genre)=>genre.name).join(", ")
+            // });
+            games = games.concat(foundGames);
+        // }
         
         res.json(games);
     }
