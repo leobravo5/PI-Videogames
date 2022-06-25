@@ -1,5 +1,5 @@
 import './App.css';
-import {BrowserRouter as Route} from "react-router-dom";
+import {Route,} from "react-router-dom";
 import LandingPage from "./components/LandingPage/LandingPage";
 import Home from "./components/Home/Home";
 import NavBar from "./components/NavBar/NavBar";
@@ -10,12 +10,18 @@ import Details from "./components/Details/Details";
 function App() {
   return (
     <div className="App">
-      <Route exact path="/">
-        <LandingPage/>
-      </Route>
-      <Route exact path="/videogames" component={Home}/>
-      <Route exact path="/videogames/:id" component={Details}/>
-      <Route exact path="/create" component={CreateVideogame}/>
+        <Route exact path={"/home"}>
+          <Home/>
+        </Route>
+        <Route exact path={"/"}>
+          <LandingPage/>
+        </Route>
+        <Route path={"/create"}>
+          <CreateVideogame/>
+        </Route>
+        <Route path={"/details/:id"}>
+          <Details/>
+        </Route>
     </div>
   );
 }

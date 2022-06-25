@@ -16,6 +16,7 @@ router.get('/', async (req,res)=> {
             let gamesDb = await Videogame.findOne({where:{name:name},include:Genre});
             if (gamesDb){
                 foundGame={
+                    if:gamesDb.id,
                     name:gamesDb.name,
                     image:gamesDb.image,
                     genres: gamesDb.genres.map(p => p.name).join(', '),
@@ -24,6 +25,7 @@ router.get('/', async (req,res)=> {
                 let gamesApi = await axios.get(`https://api.rawg.io/api/games?search=${name}&key=${API_KEY}&page_size=15`)
                 let gamesFound = gamesApi.data.results.map((g)=>{
                     var game = {
+                        id:g.id,
                         name: g.name,
                         image: g.background_image,
                         genres: g.genres && g.genres.map((p) => p.name).join(', '),
@@ -35,6 +37,7 @@ router.get('/', async (req,res)=> {
                 let gamesApi = await axios.get(`https://api.rawg.io/api/games?search=${name}&key=${API_KEY}&page_size=15`)
                 let gamesFound = gamesApi.data.results.map((g)=>{
                     var game = {
+                        id:g.id,
                         name: g.name,
                         image: g.background_image,
                         genres: g.genres && g.genres.map((p) => p.name).join(', '),
@@ -57,6 +60,7 @@ router.get('/', async (req,res)=> {
             let apiGames = (await axios.get(apiName)).data
             let dataGame = apiGames.results.map((g)=>{
                 let game = {
+                    id:g.id,
                     name:g.name,
                     image:g.background_image,
                     genres: g.genres.map((gen)=>gen.name).join(", "), //.filter((p)=> p !== null) despues del map por si acaso
@@ -72,6 +76,7 @@ router.get('/', async (req,res)=> {
                 let genr = e.genres.map(g=>g.name);
                 let genrResult = genr.join(", ");
                 let game = {
+                    id: e.id,
                     name:e.name,
                     image:e.image,
                     genres:genrResult,

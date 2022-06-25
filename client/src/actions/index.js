@@ -24,7 +24,7 @@ export function getGenres(){
 
 export function getDetails(id){
     return async (dispatch)=>{
-        var json = await axios.get(`/videogames/${id}`);
+        var json = await axios.get(`/videogame/${id}`);
         return dispatch ({
             type:GET_DETAILS,
             payload:json.data
