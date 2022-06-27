@@ -8,3 +8,4 @@ export const CLEAR_PAGE = "CLEAR_PAGE";
 
 export const GET_DETAILS = "GET_DETAILS";
 
+export const GET_NAME = "GET_NAME";

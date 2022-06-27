@@ -44,10 +44,11 @@ router.get('/', async (req,res)=> {
                     };
                     return game;
                 })
-                if(gamesFound.length){
+                if(gamesFound.length>0){
                     res.json(gamesFound);
+                }else{
+                    return res.status(404).json({error:"Game not Found"})
                 }
-                return res.status(404).json({error:"Game not Found"})
             }    
         } else {
 

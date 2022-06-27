@@ -1,4 +1,4 @@
-import { GET_VIDEOGAMES,GET_GENRES,GET_DETAILS,CLEAR_PAGE } from "./constants";
+import { GET_VIDEOGAMES,GET_GENRES,GET_DETAILS,CLEAR_PAGE,GET_NAME } from "./constants";
 import axios from "axios";
 
 export function getVideogames(){
@@ -17,6 +17,16 @@ export function getGenres(){
         var json = await axios.get("/genres");
         return dispatch ({
             type:GET_GENRES,
+            payload:json.data
+        })
+    }
+}
+
+export function getByName(name){
+    return async (dispatch)=>{
+        var json = await axios.get(`/videogames?name=${name}`);
+        return dispatch ({
+            type:GET_NAME,
             payload:json.data
         })
     }
