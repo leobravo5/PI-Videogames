@@ -16,16 +16,32 @@ function Pagination({page,pageSize,setPage,totalCount}) {
         setPage(page + 1)
     }
 
-    // const handleEnter = e =>{
-    //     if (e.key === "Enter")
-    // }
+    const handleEnter = e =>{
+        if (e.key === "Enter"){
+          setPage(parseInt(e.target.value))
+          if(
+            parseInt(e.target.value) <1 || 
+            parseInt(e.target.value) > totalPages || 
+            isNaN(parseInt(e.target.value))
+          ) {
+            setPage(1);
+            setInput(1);
+          } else{
+            setPage(parseInt(e.target.value));
+          }
+        }
+    }
+
+    const onChange = e =>{
+      setInput(e.target.value)
+    }
 
   return (
     <div>
-        <button onClick={prevPage}></button>
-        <input value={input}/>
+        <button disabled={page===1 || page < 1} onClick={prevPage}></button>
+        <input value={input} onChange={(e)=> onChange(e)} onKeyPress={handleEnter} />
         <p> out of {totalPages}</p>
-        <button onClick={nextPage}></button>
+        <button disabled={page===totalPages || page > totalPages} onClick={nextPage}></button>
     </div>
   )
 }

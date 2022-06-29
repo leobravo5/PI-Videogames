@@ -1,4 +1,6 @@
-import { GET_VIDEOGAMES,GET_GENRES,GET_DETAILS,CLEAR_PAGE,GET_NAME } from "./constants";
+import { GET_VIDEOGAMES,GET_GENRES,GET_DETAILS,
+    CLEAR_PAGE,GET_NAME,FILTER_BY_GENRE,
+    FILTER_BY_CREATOR,ORDER_RATING,ORDER_ALPHA } from "./constants";
 import axios from "axios";
 
 export function getVideogames(){
@@ -45,5 +47,26 @@ export function getDetails(id){
 export function clearPage(){
     return {
         type:CLEAR_PAGE
+    }
+}
+
+export function filterByGenre(genre){
+    return{
+        type:FILTER_BY_GENRE,
+        payload:genre
+    }
+}
+
+export function orderByAlph(type){
+    return{
+        type:ORDER_ALPHA,
+        payload:type
+    }
+}
+
+export function orderByRating(type){
+    return{
+        type:ORDER_RATING,
+        payload:type
     }
 }

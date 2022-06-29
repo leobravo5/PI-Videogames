@@ -4,7 +4,7 @@ import { getByName } from '../../actions';
 
 
 
-function SearchBar() {
+function SearchBar({setPage}) {
 
     const dispatch = useDispatch();
     const [name,setName] = useState("");
@@ -21,9 +21,10 @@ function SearchBar() {
         }
     }
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
-        dispatch(getByName(name));
+        await dispatch(getByName(name));
+        setPage(1);
         setName("");
     }
 

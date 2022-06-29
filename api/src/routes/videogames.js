@@ -19,6 +19,7 @@ router.get('/', async (req,res)=> {
                     if:gamesDb.id,
                     name:gamesDb.name,
                     image:gamesDb.image,
+                    rating:gamesDb.rating,
                     genres: gamesDb.genres.map(p => p.name).join(', '),
                 }
                 
@@ -28,6 +29,7 @@ router.get('/', async (req,res)=> {
                         id:g.id,
                         name: g.name,
                         image: g.background_image,
+                        rating: g.rating,
                         genres: g.genres && g.genres.map((p) => p.name).join(', '),
                     };
                     return game;
@@ -40,6 +42,7 @@ router.get('/', async (req,res)=> {
                         id:g.id,
                         name: g.name,
                         image: g.background_image,
+                        rating: g.rating,
                         genres: g.genres && g.genres.map((p) => p.name).join(', '),
                     };
                     return game;
@@ -64,6 +67,7 @@ router.get('/', async (req,res)=> {
                     id:g.id,
                     name:g.name,
                     image:g.background_image,
+                    rating:g.rating,
                     genres: g.genres.map((gen)=>gen.name).join(", "), //.filter((p)=> p !== null) despues del map por si acaso
                 };
                 return game;
@@ -80,6 +84,7 @@ router.get('/', async (req,res)=> {
                     id: e.id,
                     name:e.name,
                     image:e.image,
+                    rating:g.rating,
                     genres:genrResult,
                 };
                 return game;

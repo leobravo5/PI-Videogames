@@ -3,7 +3,7 @@ import React ,{useEffect , useState} from 'react';
 import Pagination from '../Pagination/Pagination';
 import SearchBar from '../SearchBar/SearchBar';
 import Videogames from '../Videogames/Videogames';
-// import NavBar from '../NavBar/NavBar';
+import NavBar from '../NavBar/NavBar';
 import {useSelector,useDispatch} from 'react-redux';
 import { getVideogames } from '../../actions';
 
@@ -13,6 +13,7 @@ function Home() {
   const dispatch = useDispatch()
   // const [loading,setLoading] = useState(true)
   const [page,setPage] = useState(1);
+  const [order, setOrder] = useState("");
   const [pageSize] = useState(15);
 
   useEffect(()=>{
@@ -35,7 +36,8 @@ function Home() {
         <Loading setLoading={setLoading}/>
         ):( */}
         <div>
-          <SearchBar/>
+          <NavBar setPage={setPage} setOrder={setOrder} />
+          <SearchBar setPage={setPage} />
           {/* <div className={s.contains}>
           {videogames.length > 0 && videogames.map(e=><Cards key={e.name} game = {e}/>)}
           </div> */}
