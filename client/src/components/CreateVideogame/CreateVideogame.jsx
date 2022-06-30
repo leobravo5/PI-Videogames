@@ -1,6 +1,6 @@
 import React, { useEffect , useState } from 'react'
 import {useSelector,useDispatch} from "react-redux";
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import {getGenres,createGame} from "../../actions";
 
 
@@ -39,9 +39,8 @@ const validateForm = (input) =>{
 function CreateVideogame() {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const genres = useSelector((state)=>state.genres);
-  const genres1 = genres.slice(0, 10)
-  const genres2 = genres.slice(10, 20)
 
   const [errors, setErrors] = useState({});
   const [input,setInput] = useState({
@@ -63,34 +62,71 @@ function CreateVideogame() {
   function handleSubmit(e){
     e.preventDefault();
     setErrors(validateForm(input));
+    const errors=validateForm(input);
     if(Object.values(errors).length===0){
+      console.log(input)
       dispatch(createGame(input));
       alert("Videogame created successfully!");
-      Navigate("/home");
+      // setTimeout(() => {
+      //   navigate("/home");
+      // }, 1000);
     }else{
       alert("Please complete the fields correctly");
     }
   }
 
   function handleChange(e){
-    if(e.target.name === "platforms" || e.target.name === "genres"){
-      const array = input[e.target.name];
-      setInput({
-        ...input,
-        [e.target.name]:array.concat(e.target.value),
-      });
-    } else{
+    // if(e.target.name === "platforms" || e.target.name === "genres"){
+    //   const array = input[e.target.name];
+    //   setInput({
+    //     ...input,
+    //     [e.target.name]:array.concat(e.target.value),
+    //   });
+    // } else{
       setInput({
         ...input,
         [e.target.name]:e.target.value,
       });
-    }
+    // }
     setErrors(
       validateForm({
         ...input,
         [e.target.name]: e.target.value,
       })
     );
+  }
+
+  function handleSelectGenres(e){
+    if(input.genres.includes(e.target.value)){
+      alert(`${e.target.value} has already been selected`)
+    } else{
+      setInput({
+        ...input,
+        genres:[...input.genres , e.target.value]
+      });
+      setErrors(
+        validateForm({
+          ...input,
+        genres:[...input.genres , e.target.value]
+        })
+      );
+    }
+  }
+  function handleSelectPlat(e){
+    if(input.platforms.includes(e.target.value)){
+      alert(`${e.target.value} has already been selected`)
+    } else{
+      setInput({
+        ...input,
+        platforms:[...input.platforms , e.target.value]
+      });
+      setErrors(
+        validateForm({
+          ...input,
+        platforms:[...input.platforms , e.target.value]
+        })
+      );
+    }
   }
 
   return (
@@ -100,55 +136,71 @@ function CreateVideogame() {
         <div>
           <button onClick={(e)=>{
             e.preventDefault()
-            Navigate("/home")
+            navigate("/home")
           }}>
             Return to Home
           </button>
         </div>
       </div>
-      <h1>Create a new Videogame</h1>
-      <form onSubmit={(e)=>handleSubmit(e)} onChange={(e)=>handleChange(e)} >
-        <div>
-          <input name="name" type="text" value={input.name} placeholder="Title Name..." onChange={(e)=>handleChange(e)}  />
-          <input name="description" type="text" value={input.description} placeholder="Description..." onChange={(e)=>handleChange(e)}  />
-          <input name="release_date" type="date" value={input.release_date} placeholder="Release Date..." onChange={(e)=>handleChange(e)} />
-          <input name="rating" type="number" value={input.rating} placeholder="Rating..." onChange={(e)=>handleChange(e)}  />
-          <input name="image" type="text" value={input.image} placeholder="Img URL..." onChange={(e)=>handleChange(e)}  />
-        </div>
-        <div>
+      <form onSubmit={(e)=>handleSubmit(e)}>
+        <h1>Create a new Videogame</h1>
+        <input name="name" type="text" value={input.name} placeholder="Title Name..." onChange={handleChange}  />
+        <input name="description" type="text" value={input.description} placeholder="Description..." onChange={handleChange}  />
+        <input name="release_date" type="date" value={input.release_date} placeholder="Release Date..." onChange={handleChange} />
+        <input name="rating" type="number" value={input.rating} placeholder="Rating..." onChange={handleChange}  />
+        <input name="image" type="text" value={input.image} placeholder="Img URL..." onChange={handleChange}  />
+        
+        <select name='genres' onChange={(e)=>handleSelectGenres(e)} placeholder="Select Genres...">
+          <option hidden value="">
+            Select Genres
+          </option>
+          {genres.map((g)=>(
+            <option key={g.id} value={g.name} name={g.name}>
+              {g.name}
+            </option>
+          ))}
+        </select>
+        {input.genres.length>0 && (
           <div>
-            <label>-Genres-</label>
-            <div>
-              <div>
-                {genres1.map((genre)=>(
-                  <div key={genre.name}>
-                    <input type="checkbox" name='genres' value={genre.name} />
-                    <label name={genre}>{genre.name}</label>
-                  </div>
-                ))}
-              </div>
-              <div>
-                {genres2.map((genre)=>(
-                  <div key={genre.name}>
-                    <input type="checkbox" name='genres' value={genre.name} />
-                    <label name={genre}>{genre.name}</label>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <h3>Genres Selected</h3>
+            <hr />
+            <ul>
+              {input.genres.map((g)=>{
+                return (
+                  <li key={g}>
+                    {g}
+                  </li>
+                );
+              })}
+            </ul>
           </div>
+        )}
+
+        <select name='platforms' onChange={(e)=>handleSelectPlat(e)} placeholder="Select Platforms...">
+          <option hidden value="">
+            Select Platforms
+          </option>
+          {platformsOptions.map((p)=>(
+            <option key={p} value={p} name="platforms">
+              {p}
+            </option>
+          ))}
+        </select>
+        {input.platforms.length>0 && (
           <div>
-            <label>-Platforms-</label>
-            <div>
-              {platformsOptions.map((p)=>(
-                <div key={p}>
-                  <input type="checkbox" name='platforms' value={p}/>
-                  <label name={p}>{p}</label>
-                </div>
-              ))}
-            </div>
+            <h3>Platforms Selected</h3>
+            <hr />
+            <ul>
+              {input.platforms.map((g)=>{
+                return (
+                  <li key={g}>
+                    {g}
+                  </li>
+                );
+              })}
+            </ul>
           </div>
-        </div>
+        )}
         <button type='submit'>
           CREATE
         </button>

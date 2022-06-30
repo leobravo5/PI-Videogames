@@ -74,6 +74,6 @@ export function orderByRating(type){
 export function createGame(game){
     return async ()=>{
         const newGame = await axios.post("/videogames",game);
-        alert(newGame.data.msg)
+        console.log(newGame)
     }
 }
