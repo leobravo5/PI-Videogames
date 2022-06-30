@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { getVideogames } from '../../actions';
 import FilterGenres from './Filters/FilterGenres';
 import SortAlpha from './Filters/SortAlpha';
 import SortRating from './Filters/SortRating';
-//falta sort by rating!!!
+
 function NavBar({setPage,setOrder}) {
   const dispatch = useDispatch();
 
@@ -15,6 +15,7 @@ function NavBar({setPage,setOrder}) {
     setPage(1);
   }
 
+
   return (
     <div>
       <FilterGenres setPage={setPage} />
@@ -23,6 +24,9 @@ function NavBar({setPage,setOrder}) {
       <button onClick={(e)=>resetFilters(e)}>
         Reset
       </button>
+      <Link to="/create">
+        <button>Create a Videogame</button>
+      </Link>
     </div>
   )
 }

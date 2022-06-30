@@ -1,6 +1,6 @@
 import { GET_VIDEOGAMES,GET_GENRES,GET_DETAILS,
     CLEAR_PAGE,GET_NAME,FILTER_BY_GENRE,
-    FILTER_BY_CREATOR,ORDER_RATING,ORDER_ALPHA } from "./constants";
+    FILTER_BY_CREATOR,ORDER_RATING,ORDER_ALPHA,CREATE_GAME } from "./constants";
 import axios from "axios";
 
 export function getVideogames(){
@@ -68,5 +68,12 @@ export function orderByRating(type){
     return{
         type:ORDER_RATING,
         payload:type
+    }
+}
+
+export function createGame(game){
+    return async ()=>{
+        const newGame = await axios.post("/videogames",game);
+        alert(newGame.data.msg)
     }
 }

@@ -19,3 +19,5 @@ export const FILTER_BY_CREATOR = "FILTER_BY_CREATOR";
 export const ORDER_RATING = "ORDER_RATING";
 
 export const ORDER_ALPHA = "ORDER_ALPHA";
+
+export const CREATE_GAME = "CREATE_GAME";

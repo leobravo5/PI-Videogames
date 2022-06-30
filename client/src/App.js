@@ -1,5 +1,5 @@
 import './App.css';
-import {Route,} from "react-router-dom";
+import {Route,Routes} from "react-router-dom";
 import LandingPage from "./components/LandingPage/LandingPage";
 import Home from "./components/Home/Home";
 import NavBar from "./components/NavBar/NavBar";
@@ -10,10 +10,12 @@ import Details from "./components/Details/Details";
 function App() {
   return (
     <div className="App">
-        <Route exact path={"/home"}>
-          <Home/>
-        </Route>
-        <Route exact path={"/"}>
+      <Routes>
+        <Route exact path="/home" element={<Home/>}/>
+        <Route exact path="/" element={<LandingPage/>}/>
+        <Route exact path="/create" element={<CreateVideogame/>}/>
+        <Route exact path="/details/:id" element={<Details/>}/>
+        {/* <Route exact path={"/"}>
           <LandingPage/>
         </Route>
         <Route path={"/create"}>
@@ -21,7 +23,8 @@ function App() {
         </Route>
         <Route path={"/details/:id"}>
           <Details/>
-        </Route>
+        </Route> */}
+      </Routes>
     </div>
   );
 }

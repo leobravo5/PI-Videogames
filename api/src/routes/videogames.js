@@ -76,24 +76,28 @@ router.get('/', async (req,res)=> {
             games = games.concat(dataGame);
         } 
         let dbGames = await Videogame.findAll({include:Genre})
+        // console.log(dbGames);
         // if (dbGames.length>0){
-            const foundGames = dbGames.map(e=>{
-                let genr = e.genres.map(g=>g.name);
-                let genrResult = genr.join(", ");
-                let game = {
-                    id: e.id,
-                    name:e.name,
-                    image:e.image,
-                    rating:g.rating,
-                    genres:genrResult,
-                };
-                return game;
-            }) 
-            // let jsonGames = dbGames.map((j)=>j.toJSON())
-            // jsonGames.forEach(c=>{
-            //     c.genres= c.genres.map((genre)=>genre.name).join(", ")
-            // });
-            games = games.concat(foundGames);
+            // let foundGames = dbGames.map(e=>{
+            //     e.toJSON()
+            //     let genr = e.genres.map(g=>g.name);
+            //     let genrResult = genr.join(", ");
+            //     let game = {
+            //         id: e.id,
+            //         name:e.name,
+            //         image:e.image,
+            //         rating:g.rating,
+            //         genres:genrResult,
+            //     };
+            //     // console.log(game);
+            //     return game;
+            // }) 
+            let jsonGames = dbGames.map((j)=>j.toJSON())
+            // console.log(jsonGames);
+            jsonGames.forEach(c=>{
+                c.genres= c.genres.map((genre)=>genre.name).join(", ")
+            });
+            games = games.concat(jsonGames);
         // }
         
         res.json(games);
