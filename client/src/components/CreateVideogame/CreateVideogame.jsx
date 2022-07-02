@@ -67,9 +67,9 @@ function CreateVideogame() {
       console.log(input)
       dispatch(createGame(input));
       alert("Videogame created successfully!");
-      // setTimeout(() => {
-      //   navigate("/home");
-      // }, 1000);
+      setTimeout(() => {
+        navigate("/home");
+      }, 1000);
     }else{
       alert("Please complete the fields correctly");
     }
@@ -147,7 +147,7 @@ function CreateVideogame() {
         <input name="name" type="text" value={input.name} placeholder="Title Name..." onChange={handleChange}  />
         <input name="description" type="text" value={input.description} placeholder="Description..." onChange={handleChange}  />
         <input name="release_date" type="date" value={input.release_date} placeholder="Release Date..." onChange={handleChange} />
-        <input name="rating" type="number" value={input.rating} placeholder="Rating..." onChange={handleChange}  />
+        <input name="rating" type="number" value={input.rating} min="1" max="5" placeholder="Rating..." onChange={handleChange}  />
         <input name="image" type="text" value={input.image} placeholder="Img URL..." onChange={handleChange}  />
         
         <select name='genres' onChange={(e)=>handleSelectGenres(e)} placeholder="Select Genres...">

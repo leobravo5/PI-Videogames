@@ -56,6 +56,21 @@ const rootReducer = (state = initialState, action) =>{
                 videogames:filteredVideogames
             }
 
+        
+        case FILTER_BY_CREATOR:
+            const vgms = state.allVideogames;
+            const filteredvgms =
+                action.payload === "All"
+                ? vgms
+                :action.payload === "Created"
+                ? vgms.filter(game=>
+                    typeof game.id ==="string")
+                :vgms.filter(game=>
+                    typeof game.id === "number")
+            return{
+                ...state,
+                videogames:filteredvgms
+            }
 
         case ORDER_ALPHA:
             const sortAlph =

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { filterByGenre, getGenres } from '../../../actions';
 
-function FilterGenres({setPage}) {
+function FilterGenres({setPage,setInput}) {
 
   const dispatch = useDispatch();
   const genres = useSelector((state)=>state.genres);
@@ -15,6 +15,7 @@ function FilterGenres({setPage}) {
     e.preventDefault();
     dispatch(filterByGenre(e.target.value))
     setPage(1);
+    setInput(1);
   }
 
   return (

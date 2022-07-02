@@ -6,12 +6,12 @@ function Cards({game}) {
   return (
     <div className={s.container}>
       <div>
-        <Link to={`/details/${game.id}`}>
+        <Link className={s.link} to={`/details/${game.id}`}>
           {game.name}
         </Link>
       </div>
       <img src={game.image} alt=" " className={s.img}/>
-      <div>{game.genres}</div>
+      <div className={s.text}>{game.genres}</div>
     </div>
   )
 }

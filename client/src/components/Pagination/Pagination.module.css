@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Finlandica:ital,wght@1,400;1,700&display=swap');
+.container{
+    display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+}
+
+.text{
+	color: blue;
+	font-family: "Finlandica";
+	font-weight: 700;
+	text-shadow: 0 0 0.125 deeppink;
+}
+
+.btn {
+	padding:5px;
+	font-family: "Finlandica";
+	font-weight: 700;
+	background-color: rgb(9, 9, 248);
+	color: white;
+	/* border: rgb(9, 9, 248) 1px solid; */
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.input{
+    /* display: flex; */
+	padding: 5px;
+    width: 25px;
+	/* border-radius: 5px; */
+}
+
+.btn:disabled{
+	background-color: rgb(183, 183, 250);
+}

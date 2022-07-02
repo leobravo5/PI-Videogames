@@ -6,7 +6,9 @@ import Videogames from '../Videogames/Videogames';
 import NavBar from '../NavBar/NavBar';
 import {useSelector,useDispatch} from 'react-redux';
 import { getVideogames } from '../../actions';
-
+import Loading from '../Loading/Loading';
+import background from"../img/neonbg2.0.1.png";
+import s from "./Home.module.css";
 function Home() {
 
   const videogames = useSelector((state)=>state.videogames);
@@ -15,7 +17,7 @@ function Home() {
   const [page,setPage] = useState(1);
   const [order, setOrder] = useState("");
   const [pageSize] = useState(15);
-
+  const [input,setInput] =useState(1);
   useEffect(()=>{
     dispatch(getVideogames());
   },[dispatch]);
@@ -32,19 +34,23 @@ function Home() {
 
   return (
     <div>
-      {/* {loading === true ? (
-        <Loading setLoading={setLoading}/>
-        ):( */}
-        <div>
-          <NavBar setPage={setPage} setOrder={setOrder} />
+      {videogames.length <= 0 ? (
+        <Loading/>
+      ):(
+        
+        <div className={s.container}>
+          <img className={s.img} src={background} alt="background" />
+          <div className={s.home}>
+          <NavBar setPage={setPage} setOrder={setOrder} setInput={setInput}/>
           <SearchBar setPage={setPage} />
           {/* <div className={s.contains}>
           {videogames.length > 0 && videogames.map(e=><Cards key={e.name} game = {e}/>)}
-          </div> */}
+        </div> */}
           <Videogames videogames={currentPage}/>
-          <Pagination pageSize={pageSize} setPage={setPage} totalCount={videogames.length} page={page}/>
+          <Pagination pageSize={pageSize} setInput={setInput} input={input} setPage={setPage} totalCount={videogames.length} page={page}/>
+        </div>
         </div> 
-        {/* )} */}
+        )}
         
     </div>
   )

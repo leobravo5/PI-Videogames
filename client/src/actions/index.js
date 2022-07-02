@@ -1,6 +1,6 @@
 import { GET_VIDEOGAMES,GET_GENRES,GET_DETAILS,
     CLEAR_PAGE,GET_NAME,FILTER_BY_GENRE,
-    FILTER_BY_CREATOR,ORDER_RATING,ORDER_ALPHA,CREATE_GAME } from "./constants";
+    FILTER_BY_CREATOR,ORDER_RATING,ORDER_ALPHA} from "./constants";
 import axios from "axios";
 
 export function getVideogames(){
@@ -54,6 +54,13 @@ export function filterByGenre(genre){
     return{
         type:FILTER_BY_GENRE,
         payload:genre
+    }
+}
+
+export function filterByCreator(option){
+    return{
+        type:FILTER_BY_CREATOR,
+        payload:option
     }
 }
 

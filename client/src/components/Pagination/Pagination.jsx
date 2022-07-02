@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import s from "./Pagination.module.css";
 
 
-function Pagination({page,pageSize,setPage,totalCount}) {
-    const [input,setInput] = useState(1);
+function Pagination({page,pageSize,setPage,totalCount,setInput,input}) {
+    // const [input,setInput] = useState(1);
     const totalPages = Math.ceil(totalCount/pageSize);
 
     const prevPage = ()=>{
@@ -37,11 +37,11 @@ function Pagination({page,pageSize,setPage,totalCount}) {
     }
 
   return (
-    <div>
-        <button disabled={page===1 || page < 1} onClick={prevPage}></button>
-        <input value={input} onChange={(e)=> onChange(e)} onKeyPress={handleEnter} />
-        <p> out of {totalPages}</p>
-        <button disabled={page===totalPages || page > totalPages} onClick={nextPage}></button>
+    <div className={s.container}>
+        <button className={s.btn} disabled={page===1 || page < 1} onClick={prevPage}>Prev</button>
+        <input className={s.input} value={input} onChange={(e)=> onChange(e)} onKeyPress={handleEnter} />
+        <p className={s.text} > out of {totalPages}</p>
+        <button className={s.btn} disabled={page===totalPages || page > totalPages} onClick={nextPage}>Next</button>
     </div>
   )
 }
