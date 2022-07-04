@@ -16,7 +16,7 @@ function Loading({setLoading}) {
       <h1 className={s.title}>Loading please wait...</h1>
       {setTimeout(() => {
         setLoading(false);
-        }, 2000)}
+        }, 5000)}
     </div>
   )
 }
