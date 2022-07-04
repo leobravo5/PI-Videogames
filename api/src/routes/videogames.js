@@ -16,7 +16,7 @@ router.get('/', async (req,res)=> {
             let gamesDb = await Videogame.findOne({where:{name:name},include:Genre});
             if (gamesDb){
                 foundGame={
-                    if:gamesDb.id,
+                    id:gamesDb.id,
                     name:gamesDb.name,
                     image:gamesDb.image,
                     rating:gamesDb.rating,
