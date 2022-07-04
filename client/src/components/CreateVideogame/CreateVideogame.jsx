@@ -1,8 +1,8 @@
 import React, { useEffect , useState } from 'react'
 import {useSelector,useDispatch} from "react-redux";
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {getGenres,createGame} from "../../actions";
-
+import s from "./CreateVideogame.module.css";
 
 
 const validateForm = (input) =>{
@@ -19,6 +19,9 @@ const validateForm = (input) =>{
   }
   if(!input.rating){
     errors.rating="Rating is required";
+  }
+  if(input.image && !(input.image.match(/^http[^\?]*.(jpg|jpeg|gif|png|tiff|bmp)(\?(.*))?$/gmi) !== null)){ // eslint-disable-line
+    errors.image="The link provided is not an image";
   }
   if(input.rating < 0 || input.rating > 5){
     errors.rating="Rating must be between 0 and 5";
@@ -69,25 +72,17 @@ function CreateVideogame() {
       alert("Videogame created successfully!");
       setTimeout(() => {
         navigate("/home");
-      }, 1000);
+      }, 1600);
     }else{
       alert("Please complete the fields correctly");
     }
   }
 
   function handleChange(e){
-    // if(e.target.name === "platforms" || e.target.name === "genres"){
-    //   const array = input[e.target.name];
-    //   setInput({
-    //     ...input,
-    //     [e.target.name]:array.concat(e.target.value),
-    //   });
-    // } else{
       setInput({
         ...input,
         [e.target.name]:e.target.value,
       });
-    // }
     setErrors(
       validateForm({
         ...input,
@@ -95,6 +90,7 @@ function CreateVideogame() {
       })
     );
   }
+
 
   function handleSelectGenres(e){
     if(input.genres.includes(e.target.value)){
@@ -128,13 +124,38 @@ function CreateVideogame() {
       );
     }
   }
+  const handleDeleteGen = (e) => {
+    e.preventDefault();
+    setInput({
+      ...input,
+      genres: input.genres.filter((c) => c !== e.target.name),
+    });
+    setErrors(
+      validateForm({
+        ...input,
+        genres: input.genres.filter((c) => c !== e.target.name),
+      })
+    );
+  };
+  const handleDeletePlat = (e) => {
+    e.preventDefault();
+    setInput({
+      ...input,
+      platforms: input.platforms.filter((c) => c !== e.target.name),
+    });
+    setErrors(
+      validateForm({
+        ...input,
+        platforms: input.platforms.filter((c) => c !== e.target.name),
+      })
+    );
+  };
 
   return (
-    <div>
+    <div className={s.container}>
       <div>
-        {/*aqui podes poner imagen*/}
         <div>
-          <button onClick={(e)=>{
+          <button className={s.submit} onClick={(e)=>{
             e.preventDefault()
             navigate("/home")
           }}>
@@ -142,69 +163,120 @@ function CreateVideogame() {
           </button>
         </div>
       </div>
-      <form onSubmit={(e)=>handleSubmit(e)}>
+      <div className={s.subcontainer} >
         <h1>Create a new Videogame</h1>
-        <input name="name" type="text" value={input.name} placeholder="Title Name..." onChange={handleChange}  />
-        <input name="description" type="text" value={input.description} placeholder="Description..." onChange={handleChange}  />
-        <input name="release_date" type="date" value={input.release_date} placeholder="Release Date..." onChange={handleChange} />
-        <input name="rating" type="number" value={input.rating} min="1" max="5" placeholder="Rating..." onChange={handleChange}  />
-        <input name="image" type="text" value={input.image} placeholder="Img URL..." onChange={handleChange}  />
-        
-        <select name='genres' onChange={(e)=>handleSelectGenres(e)} placeholder="Select Genres...">
-          <option hidden value="">
-            Select Genres
-          </option>
-          {genres.map((g)=>(
-            <option key={g.id} value={g.name} name={g.name}>
-              {g.name}
-            </option>
-          ))}
-        </select>
-        {input.genres.length>0 && (
-          <div>
-            <h3>Genres Selected</h3>
-            <hr />
-            <ul>
-              {input.genres.map((g)=>{
-                return (
-                  <li key={g}>
-                    {g}
-                  </li>
-                );
-              })}
-            </ul>
+        <form className={s.form} onSubmit={(e)=>handleSubmit(e)}>
+          <div className={s.divname} >
+            <div className={s.name}>
+              <label><u className={s.label}>Name:</u></label>
+              <input className={s.inputbox} name="name" type="text" value={input.name} placeholder="Title Name..." onChange={handleChange}  />
+            </div>
+            {errors.name && <p className={s.form_error}>{errors.name}</p>}
           </div>
-        )}
-
-        <select name='platforms' onChange={(e)=>handleSelectPlat(e)} placeholder="Select Platforms...">
-          <option hidden value="">
-            Select Platforms
-          </option>
-          {platformsOptions.map((p)=>(
-            <option key={p} value={p} name="platforms">
-              {p}
-            </option>
-          ))}
-        </select>
-        {input.platforms.length>0 && (
-          <div>
-            <h3>Platforms Selected</h3>
-            <hr />
-            <ul>
-              {input.platforms.map((g)=>{
-                return (
-                  <li key={g}>
-                    {g}
-                  </li>
-                );
-              })}
-            </ul>
+          <div className={s.divname} >
+            <div className={s.name}>
+              <label><u className={s.label}>Description:</u></label>
+              <input className={s.inputbox} name="description" type="text" value={input.description} placeholder="Description..." onChange={handleChange}  />
+            </div>
+            {errors.description && <p className={s.form_error}>{errors.description}</p>}  
           </div>
-        )}
-        <button type='submit'>
-          CREATE
-        </button>
-      </form>
+          <div className={s.divname} >
+            <div className={s.name}>
+              <label><u className={s.label}>Released:</u></label>
+              <input className={s.inputbox} name="release_date" type="date" value={input.release_date} placeholder="Release Date..." onChange={handleChange} />
+            </div>
+            {errors.release_date && <p className={s.form_error}>{errors.release_date}</p>}
+          </div>
+          <div className={s.divname} >
+            <div className={s.name}>
+              <label><u className={s.label}>Rating:</u></label>
+              <input className={s.inputbox} name="rating" type="number" value={input.rating} placeholder="Rating 0-5..." onChange={handleChange}  />
+            </div>
+            {errors.rating && <p className={s.form_error}>{errors.rating}</p>}
+          </div>
+          <div className={s.divname} >
+            <div className={s.name}>
+              <label><u className={s.label}>Image:</u></label>
+              <input className={s.inputbox} name="image" type="text" value={input.image} placeholder="Img URL..." onChange={handleChange}  />
+            </div>
+            {errors.image && <p className={s.form_error}>{errors.image}</p>}
+          </div>
+          <div className={s.divname}>
+            <div className={s.name}>
+              <label><u className={s.label}>Genre/s:</u></label>
+              <select className={s.inputbox} name='genres' onChange={(e)=>handleSelectGenres(e)} placeholder="Select Genres...">
+                <option hidden value="">
+                  Select Genres
+                </option>
+                {genres.map((g)=>(
+                  <option key={g.id} value={g.name} name={g.name}>
+                    {g.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {errors.genres && <p className={s.form_error}>{errors.genres}</p>}
+          </div>
+          <div className={s.divname}>
+            <div className={s.name}>
+              <label><u className={s.label}>Platform/s:</u></label>
+              <select className={s.inputbox} name='platforms' onChange={(e)=>handleSelectPlat(e)} placeholder="Select Platforms...">
+                <option hidden value="">
+                  Select Platforms
+                </option>
+                {platformsOptions.map((p)=>(
+                  <option key={p} value={p} name="platforms">
+                    {p}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {errors.platforms && <p className={s.form_error}>{errors.platforms}</p>}
+          </div>
+          <button className={s.submit} type='submit'>
+            CREATE
+          </button>
+        </form>
+        <div className={s.display} >
+          {input.genres.length>0 && (
+              <div className={s.subdisplay}>
+                <h3>Genres Selected</h3>
+                <hr />
+                <ul>
+                  {input.genres.map((g)=>{
+                    return (
+                      <li key={g}>
+                        <button name={g} onClick={(e)=>{handleDeleteGen(e)}}>
+                          ❌
+                        </button>{"  "}
+                        {g}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            )}
+          {input.platforms.length>0 && (
+              <div className={s.subdisplay}>
+                <h3>Platforms Selected</h3>
+                <hr />
+                <ul>
+                  {input.platforms.map((g)=>{
+                    return (
+                      <li key={g}>
+                        <button name={g} onClick={(e)=>{handleDeletePlat(e)}} >
+                        ❌
+                        </button>{"  "}
+                        {g}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            )}  
+        </div>
+      </div>
+      
     </div>
   )
 }

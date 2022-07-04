@@ -47,11 +47,7 @@ router.get('/', async (req,res)=> {
                     };
                     return game;
                 })
-                if(gamesFound.length>0){
-                    res.json(gamesFound);
-                }else{
-                    return res.status(404).json({error:"Game not Found"})
-                }
+                res.json(gamesFound);
             }    
         } else {
 

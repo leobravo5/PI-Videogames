@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import s from "./Pagination.module.css";
 
 
 function Pagination({page,pageSize,setPage,totalCount,setInput,input}) {
-    // const [input,setInput] = useState(1);
+
     const totalPages = Math.ceil(totalCount/pageSize);
 
     const prevPage = ()=>{
@@ -16,32 +16,24 @@ function Pagination({page,pageSize,setPage,totalCount,setInput,input}) {
         setPage(page + 1)
     }
 
-    const handleEnter = e =>{
-        if (e.key === "Enter"){
-          setPage(parseInt(e.target.value))
-          if(
-            parseInt(e.target.value) <1 || 
-            parseInt(e.target.value) > totalPages || 
-            isNaN(parseInt(e.target.value))
-          ) {
-            setPage(1);
-            setInput(1);
-          } else{
-            setPage(parseInt(e.target.value));
-          }
-        }
+    const firstPage = ()=>{
+      setInput(1);
+      setPage(1);
     }
 
-    const onChange = e =>{
-      setInput(e.target.value)
+    const lastPage = ()=>{
+      setInput(totalPages);
+      setPage(totalPages);
     }
+
 
   return (
     <div className={s.container}>
+        <button className={s.btn} disabled={page===1 || page < 1} onClick={firstPage}>First</button>
         <button className={s.btn} disabled={page===1 || page < 1} onClick={prevPage}>Prev</button>
-        <input className={s.input} value={input} onChange={(e)=> onChange(e)} onKeyPress={handleEnter} />
-        <p className={s.text} > out of {totalPages}</p>
+        <p className={s.text} > {page} out of {totalPages}</p>
         <button className={s.btn} disabled={page===totalPages || page > totalPages} onClick={nextPage}>Next</button>
+        <button className={s.btn} disabled={page===totalPages || page > totalPages} onClick={lastPage}>Last</button>
     </div>
   )
 }

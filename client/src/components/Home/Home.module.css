@@ -15,3 +15,17 @@
 .home{
     position: relative;
 }
+.text{
+    color: whitesmoke;
+    text-shadow: 0 0 5px deeppink,0 0 5px rgb(43, 20, 255);
+}
+.line{
+    margin-left: 15%;
+    margin-right: 15%;
+    text-shadow: 0 0 5px deeppink;
+}
+
+
+.errortitle{
+    color: deeppink;
+}

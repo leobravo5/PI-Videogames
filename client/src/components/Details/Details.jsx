@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams,Link } from 'react-router-dom';
 import { clearPage, getDetails } from '../../actions';
 import s from "./Details.module.css";
-
+import Loading from '../Loading/Loading';
+import notf from "../img/tanjiro.jpg";
 
 
 function Details() {
@@ -23,10 +24,12 @@ function Details() {
   return (
     <div>
       {
-      details !== undefined ? (
+      Object.values(details).length>0 ? (
         <div className={s.container}>
             <h1 className={s.title} >{details.name}</h1>
+            {details.image ? (
             <img className={s.img} src={details.image} alt="game IMG" />
+            ):(<img className={s.img} src={notf} alt="game IMG"/>)}
             <div>
               <h2 className={s.props} >Genres: <span className={s.data}>{details.genres}</span></h2>
               <h2 className={s.props} >Rating: <span className={s.data}>{details.rating}</span></h2>
@@ -41,7 +44,7 @@ function Details() {
               <button className={s.btn} >🡸HOME</button>
             </Link>
         </div>
-    ): <h1>{details.name}</h1>
+    ): <Loading/>
       }
     </div>
   )

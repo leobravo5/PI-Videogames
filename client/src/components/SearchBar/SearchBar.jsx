@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { getByName } from '../../actions';
-
+import s from "./SearchBar.module.css";
 
 
 function SearchBar({setPage}) {
@@ -38,9 +38,12 @@ function SearchBar({setPage}) {
             onChange={(e)=>handleSearch(e)}
         />
         <button
+            className={s.search_btn}
             type="submit"
             onClick={(e)=>handleSubmit(e)}
-        />
+        >
+            Search    
+        </button>
     </div>
   )
 }

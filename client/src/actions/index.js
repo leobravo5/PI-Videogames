@@ -26,8 +26,8 @@ export function getGenres(){
 
 export function getByName(name){
     return async (dispatch)=>{
-        var json = await axios.get(`/videogames?name=${name}`);
-        return dispatch ({
+            var json = await axios.get(`/videogames?name=${name}`);
+            return dispatch ({
             type:GET_NAME,
             payload:json.data
         })

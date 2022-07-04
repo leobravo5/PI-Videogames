@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getVideogames } from '../../actions';
@@ -8,7 +8,7 @@ import SortAlpha from './Filters/SortAlpha';
 import SortRating from './Filters/SortRating';
 import s from "./NavBar.module.css";
 
-function NavBar({setPage,setOrder,setInput}) {
+function NavBar({setPage,setOrder,setInput,order}) {
   const dispatch = useDispatch();
 
   function resetFilters(e){
@@ -21,7 +21,6 @@ function NavBar({setPage,setOrder,setInput}) {
 
   return (
     <div className={s.container} >
-      {/* <span className={s.videogames}>VIDEOGAMES</span> */}
       <span>Filter By:</span>
       <FilterGenres setPage={setPage} setInput={setInput} />
       <FilterCreator setPage={setPage} setInput={setInput} />
@@ -29,8 +28,8 @@ function NavBar({setPage,setOrder,setInput}) {
         RESET FILTERS
       </button>
       <span>Sort By:</span>
-      <SortAlpha setOrder={setOrder} setPage={setPage} />
-      <SortRating setOrder={setOrder} setPage={setPage}/>
+      <SortAlpha setOrder={setOrder} order={order} setPage={setPage} />
+      <SortRating setOrder={setOrder} order={order} setPage={setPage}/>
       <Link to="/create">
         <button className={s.create}>CREATE VIDEOGAME</button>
       </Link>

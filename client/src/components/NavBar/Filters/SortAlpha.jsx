@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { orderByAlph } from '../../../actions';
 
-function SortAlpha({setOrder,setPage}) {
+function SortAlpha({setOrder,setPage,order}) {
 
     const dispatch = useDispatch();
 

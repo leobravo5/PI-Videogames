@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { orderByRating } from '../../../actions';
 
-function SortRating({setOrder,setPage}) {
+function SortRating({setOrder,setPage,order}) {
 
   const dispatch = useDispatch();
 

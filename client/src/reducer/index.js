@@ -71,7 +71,7 @@ const rootReducer = (state = initialState, action) =>{
                 ...state,
                 videogames:filteredvgms
             }
-
+                
         case ORDER_ALPHA:
             const sortAlph =
                 action.payload === "A-Z"
