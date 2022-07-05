@@ -64,7 +64,7 @@ router.get('/', async (req,res)=> {
                     name:g.name,
                     image:g.background_image,
                     rating:g.rating,
-                    genres: g.genres.map((gen)=>gen.name).join(", "), //.filter((p)=> p !== null) despues del map por si acaso
+                    genres: g.genres.map((gen)=>gen.name).join(", "), 
                 };
                 return game;
             })
@@ -72,29 +72,12 @@ router.get('/', async (req,res)=> {
             games = games.concat(dataGame);
         } 
         let dbGames = await Videogame.findAll({include:Genre})
-        // console.log(dbGames);
-        // if (dbGames.length>0){
-            // let foundGames = dbGames.map(e=>{
-            //     e.toJSON()
-            //     let genr = e.genres.map(g=>g.name);
-            //     let genrResult = genr.join(", ");
-            //     let game = {
-            //         id: e.id,
-            //         name:e.name,
-            //         image:e.image,
-            //         rating:g.rating,
-            //         genres:genrResult,
-            //     };
-            //     // console.log(game);
-            //     return game;
-            // }) 
             let jsonGames = dbGames.map((j)=>j.toJSON())
             // console.log(jsonGames);
             jsonGames.forEach(c=>{
                 c.genres= c.genres.map((genre)=>genre.name).join(", ")
             });
             games = games.concat(jsonGames);
-        // }
         
         res.json(games);
     }
@@ -102,8 +85,6 @@ router.get('/', async (req,res)=> {
         res.status(404).json({ message: "Error at GET/videogames" });
     }
 })
-
-
 
 
 

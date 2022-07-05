@@ -8,7 +8,7 @@ function Videogames({videogames}) {
     <div className={s.contains}>
         {
             videogames.length > 0 ?
-            videogames.map(e=><Cards key={e.name} game = {e}/>)
+            videogames.map(e=><Cards key={e.id} game = {e}/>)
             : <Loading />
         }
     </div>
