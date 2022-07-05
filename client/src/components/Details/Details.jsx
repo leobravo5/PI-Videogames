@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams,Link } from 'react-router-dom';
 import { clearPage, getDetails } from '../../actions';
@@ -12,7 +12,7 @@ function Details() {
   const { id } = useParams();
   const details = useSelector((state)=>state.details);
   const dispatch = useDispatch();
-
+  const [loading,setLoading] = useState(true)
   useEffect(()=>{
     dispatch(getDetails(id));
     return ()=>{
@@ -24,7 +24,7 @@ function Details() {
   return (
     <div>
       {
-      Object.values(details).length>0 ? (
+        !loading && Object.values(details).length>0 ? (
         <div className={s.container}>
             <h1 className={s.title} >{details.name}</h1>
             {details.image ? (
@@ -44,7 +44,7 @@ function Details() {
               <button className={s.btn} >🡸HOME</button>
             </Link>
         </div>
-    ): <Loading/>
+    ): <Loading setLoading={setLoading} />
       }
     </div>
   )

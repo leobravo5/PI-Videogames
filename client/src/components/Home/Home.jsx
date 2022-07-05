@@ -21,11 +21,6 @@ function Home() {
   useEffect(()=>{
     dispatch(getVideogames());
   },[dispatch]);
-  // function paginate (e,num){
-  //   e.preventDefault();
-  //   setPage(num);
-  // }
-  // console.log(order);
 
   let lastCard  = page * pageSize;
   let firstCard = lastCard - pageSize
@@ -34,7 +29,7 @@ function Home() {
 
   return (
     <div>
-      {loading ? (
+      {loading && videogames.length ===0 ? (
         <Loading setLoading={setLoading} />
       ):
         

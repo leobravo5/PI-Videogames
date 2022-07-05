@@ -23,9 +23,13 @@ function SearchBar({setPage}) {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        await dispatch(getByName(name));
-        setPage(1);
-        setName("");
+        if(!name){
+            alert("SearchBar is empty!")
+        }else{
+            await dispatch(getByName(name));
+            setPage(1);
+            setName("");
+        }
     }
 
   return (

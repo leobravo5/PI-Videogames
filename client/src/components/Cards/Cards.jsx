@@ -14,7 +14,8 @@ function Cards({game}) {
       {game.image ? (
         <img src={game.image} alt="game img" className={s.img}/>
       ):(<img src={notf} alt="game img" className={s.img}/>)}
-      <div className={s.text}>{game.genres}</div>
+      <div className={s.text}>{game.genres || "Other"} </div>
+      <div className={s.rating}>Rating: {game.rating}</div>
     </div>
   )
 }
